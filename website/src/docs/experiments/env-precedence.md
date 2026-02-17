@@ -88,7 +88,7 @@ vars:
   PATHSEP: '{{if eq OS "windows"}};{{else}}:{{end}}'
 
 env:
-  PATH: "{{.TOOLS_BIN_DIR}}{{.PATHSEP}}{{.PATH}}"
+  PATH: '{{.TOOLS_BIN_DIR}}{{.PATHSEP}}{{env "PATH"}}'
 
 tasks:
   default:
