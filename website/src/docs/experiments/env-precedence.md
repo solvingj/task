@@ -75,3 +75,22 @@ default template function:
 ```yml
 MY_ENV: '{{.MY_ENV | default "fallback"}}'
 ```
+
+One extremely common and noteworthy use case for this feature is that it allows
+a Taskfile to prepend to the PATH environment variable for all tasks.  In this
+example, we prepend a project-local directory with tools relative to the ROOT_DIR.
+
+```yml
+version: '3'
+
+vars:
+  TOOLS_BIN_DIR: '{{joinPath .ROOT_DIR "tools" "bin"}}'
+  PATHSEP: '{{if eq OS "windows"}};{{else}}:{{end}}'
+
+env:
+  PATH: "{{.TOOLS_BIN_DIR}}{{.PATHSEP}}{{.PATH}}"
+
+tasks:
+  default:
+      - echo "$PATH"
+```
